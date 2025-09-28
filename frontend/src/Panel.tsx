@@ -5,23 +5,17 @@ import {
 } from '@inventreedb/ui';
 import { Tabs } from '@mantine/core';
 import * as DXF from 'dxf';
+import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 
-function DXFImage({
-  contents
-}: {contents: string} & {}) {
-  
-  if (!contents) return <></>
+function DXFImage({ contents }: { contents: string } & {}) {
+  if (!contents) return <></>;
 
   const helper = new DXF.Helper(contents);
 
   const svg = helper.toSVG();
 
-  return (
-    <>
-    <div dangerouslySetInnerHTML={{ __html: svg }}/>
-    </>
-  );
+  return <>{parse(svg)}</>;
 }
 
 /**
@@ -38,15 +32,15 @@ function DXFViewerPanel({ context }: { context: InvenTreePluginContext }) {
     Promise.all(
       attachment_urls.map(
         (url) =>
-        new Promise<string>((resolve) => {
-          fetch(url).then((response) => {
-            response.text().then((text) => {
-              resolve(text);
-            })
+          new Promise<string>((resolve) => {
+            fetch(url).then((response) => {
+              response.text().then((text) => {
+                resolve(text);
+              });
+            });
           })
-        })
       )
-    ).then(setImageDatas)
+    ).then(setImageDatas);
   }, [attachment_urls]);
 
   const tab_list = attachment_urls.map((url) => (
@@ -57,7 +51,7 @@ function DXFViewerPanel({ context }: { context: InvenTreePluginContext }) {
 
   const tab_panels = attachment_urls.map((url, index) => (
     <Tabs.Panel value={url.substring(url.lastIndexOf('/') + 1)}>
-      <DXFImage contents={image_datas[index]}/>
+      <DXFImage contents={image_datas[index]} />
     </Tabs.Panel>
   ));
 

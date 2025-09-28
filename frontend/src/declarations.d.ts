@@ -1,8 +1,8 @@
 declare module 'dxf' {
-    export class Helper {
-        constructor(contents: string);
-        toSVG(): string;
-    }
+  export class Helper {
+    constructor(contents: string);
+    toSVG(): string;
+  }
 }
 
 // declare module 'dxf' {
