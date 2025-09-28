@@ -8,7 +8,7 @@ import * as DXF from 'dxf';
 import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 
-function DXFImage({ contents }: { contents: string } & {}) {
+function DXFImage({ contents }: { contents: string }) {
   if (!contents) return <></>;
 
   const helper = new DXF.Helper(contents);
